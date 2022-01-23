@@ -34,14 +34,7 @@ export default observer(() => {
                     />
                 </Helmet>
                 <div className={styles.content}>
-                    <div className={styles.nav}>
-                        <a className={styles.logo}>
-                            {!("native" in window) && (
-                                <img src={wideSVG} draggable={false} />
-                            )}
-                        </a>
-                        <LocaleSelector />
-                    </div>
+
                     {/*<div className={styles.middle}>*/}
                     <div className={styles.form}>
                         {/*<div style={styles.version}>
@@ -74,24 +67,6 @@ export default observer(() => {
                     {/*</div>*/}
                     <div className={styles.bottom}>
                         <div className={styles.links}>
-                            <div className={styles.socials}>
-                                <a
-                                    href="https://github.com/revoltchat"
-                                    target="_blank">
-                                    <Github size={24} />
-                                </a>
-                                <a
-                                    href="https://twitter.com/revoltchat"
-                                    target="_blank">
-                                    <Twitter size={24} />
-                                </a>
-                                <a
-                                    href="https://mastodon.social/@revoltchat"
-                                    target="_blank">
-                                    <Mastodon size={24} />
-                                </a>
-                            </div>
-                            <div className={styles.bullet} />
                             <div className={styles.revolt}>
                                 <a
                                     href="https://revolt.chat/about"
@@ -113,13 +88,7 @@ export default observer(() => {
                                 </a>
                             </div>
                         </div>
-                        <a
-                            className={styles.attribution}
-                            href="https://unsplash.com/@fakurian"
-                            target="_blank">
-                            <Text id="general.image_by" /> &lrm;@fakurian &rlm;·
-                            unsplash.com
-                        </a>
+
                     </div>
                 </div>
             </div>

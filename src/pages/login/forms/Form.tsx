@@ -144,10 +144,6 @@ export const Form = observer(({ page, callback }: Props) => {
     return (
         <div className={styles.formModal}>
             <div className={styles.welcome}>
-                <div className={styles.title}>
-                    <img src={WaveSVG} draggable={false} />
-                    <Text id="login.welcome" />
-                </div>
                 <div className={styles.subtitle}>
                     <Text id="login.subtitle" />
                     <div>(app.revolt.chat)</div>
@@ -161,21 +157,21 @@ export const Form = observer(({ page, callback }: Props) => {
                         onSubmit,
                     ) as unknown as JSX.GenericEventHandler<HTMLFormElement>
                 }>
-                {page !== "reset" && (
+                {page !== "reset" && page !== "login"  && (
                     <FormField
                         type="email"
                         register={register}
-                        showOverline
+                        showOverline={false}
                         error={errors.email?.message}
                     />
                 )}
-                {(page === "login" ||
+                {(
                     page === "create" ||
                     page === "reset") && (
                     <FormField
                         type="password"
                         register={register}
-                        showOverline
+                        showOverline={false}
                         error={errors.password?.message}
                     />
                 )}
