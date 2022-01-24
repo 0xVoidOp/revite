@@ -53,6 +53,23 @@ export const Form = observer(({ page, callback }: Props) => {
     const [error, setGlobalError] = useState<string | undefined>(undefined);
     const [captcha, setCaptcha] = useState<CaptchaProps | undefined>(undefined);
 
+
+    const [active, setActive] = useState(false);
+    const connectWalletHandler = () => {
+        if (window.ethereum) {
+        window.ethereum
+            .request({ method: "eth_requestAccounts" })
+            .then(async (result) => {
+            setActive(true);
+            })
+            .catch((e) => {});
+        }
+        else{
+        /* Add a toast here to install metamask*/
+        }
+    };
+
+
     const { handleSubmit, register, errors, setError } = useForm<FormInputs>({
         defaultValues: {
             email: "",
@@ -188,8 +205,9 @@ export const Form = observer(({ page, callback }: Props) => {
                         <Text id={`login.error.${page}`} />
                     </Overline>
                 )}
-                <Button>
-                    <Text
+                <Button onClick ={()=>connectWalletHandler()} >
+                    Connect Metamask Wallet
+                    {/* <Text
                         id={
                             page === "create"
                                 ? "login.register"
@@ -201,8 +219,8 @@ export const Form = observer(({ page, callback }: Props) => {
                                 ? "login.resend"
                                 : "login.reset"
                         }
-                    />
-                </Button>
+                    /> */}
+                </Button> 
             </form>
             {page === "create" && (
                 <>
