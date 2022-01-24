@@ -2,6 +2,7 @@ import { CheckCircle, Envelope } from "@styled-icons/boxicons-regular";
 import { observer } from "mobx-react-lite";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
+import { Redirect} from "react-router-dom";
 
 import styles from "../Login.module.scss";
 import { Text } from "preact-i18n";
@@ -79,8 +80,10 @@ export const Form = observer(({ page, callback }: Props) => {
     });
 
     async function onSubmit(data: FormInputs) {
+    console.log('success');
         setGlobalError(undefined);
         setLoading(true);
+
 
         function onError(err: unknown) {
             setLoading(false);
@@ -98,30 +101,8 @@ export const Form = observer(({ page, callback }: Props) => {
             setGlobalError(error);
         }
 
-        try {
-            if (configuration?.features.captcha.enabled && page !== "reset") {
-                setCaptcha({
-                    onSuccess: async (captcha) => {
-                        setCaptcha(undefined);
-                        try {
-                            await callback({ ...data, captcha });
-                            setSuccess(data.email);
-                        } catch (err) {
-                            onError(err);
-                        }
-                    },
-                    onCancel: () => {
-                        setCaptcha(undefined);
-                        setLoading(false);
-                    },
-                });
-            } else {
-                await callback(data);
-                setSuccess(data.email);
-            }
-        } catch (err) {
-            onError(err);
-        }
+
+
     }
 
     if (typeof success !== "undefined") {
@@ -155,8 +136,7 @@ export const Form = observer(({ page, callback }: Props) => {
         );
     }
 
-    if (captcha) return <CaptchaBlock {...captcha} />;
-    if (loading) return <Preloader type="spinner" />;
+    if (loading) return <Redirect to={'/'} />;
 
     return (
         <div className={styles.formModal}>
