@@ -21,6 +21,7 @@ import WaveSVG from "../../settings/assets/wave.svg";
 import FormField from "../FormField";
 import { CaptchaBlock, CaptchaProps } from "./CaptchaBlock";
 import { MailProvider } from "./MailProvider";
+import {ethers} from "ethers";
 
 interface Props {
     page: "create" | "login" | "send_reset" | "reset" | "resend";
@@ -53,17 +54,34 @@ export const Form = observer(({ page, callback }: Props) => {
     const [success, setSuccess] = useState<string | undefined>(undefined);
     const [error, setGlobalError] = useState<string | undefined>(undefined);
     const [captcha, setCaptcha] = useState<CaptchaProps | undefined>(undefined);
-
-
     const [active, setActive] = useState(false);
-    const connectWalletHandler = () => {
+    const [buttontext, setButtontext] = useState("Connect to Wallet")
+
+    const randNum =()=>{
+        return  Math.floor(Math.random() * (9999 - 1000) + 1000);
+    }
+
+    const signer=async()=>{
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        const signer = provider.getSigner();
+        const num = randNum();
+        const signature = await signer.signMessage(`${num}`);
+        setButtontext("Wallted Connected")
+        return signature;
+    }
+
+    const connectWalletHandler = async() => {
         if (window.ethereum) {
         window.ethereum
             .request({ method: "eth_requestAccounts" })
             .then(async (result) => {
+            console.log(result)
             setActive(true);
+            console.log(await signer())
+            
+            console.log(buttontext)
             })
-            .catch((e) => {});
+            .catch((e) => {console.log(e)});
         }
         else{
         /* Add a toast here to install metamask*/
@@ -185,8 +203,8 @@ export const Form = observer(({ page, callback }: Props) => {
                         <Text id={`login.error.${page}`} />
                     </Overline>
                 )}
-                <Button onClick ={()=>connectWalletHandler()} >
-                    Connect Metamask Wallet
+                <Button onClick ={()=>{ connectWalletHandler()}} >
+                    {buttontext}
                     {/* <Text
                         id={
                             page === "create"

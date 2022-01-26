@@ -62,6 +62,7 @@
         "@fontsource/bitter": "^4.5.0",
         "@insertish/vite-plugin-babel-macros": "^1.0.5",
         "color-rgba": "^2.3.0",
+        "ethers": "^5.5.3",
         "fs-extra": "^10.0.0",
         "klaw": "^3.0.0",
         "react-beautiful-dnd": "^13.1.0",
